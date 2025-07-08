@@ -7,7 +7,6 @@ import '../../core/utils/validators.dart';
 import '../../core/utils/date_utils.dart';
 import '../../core/utils/id_generator.dart';
 import '../../core/utils/price_calculator.dart';
-import 'user_model.dart';
 
 /// Hall owner model with business data and earnings tracking
 class HallOwnerModel {

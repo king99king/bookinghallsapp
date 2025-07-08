@@ -23,12 +23,12 @@ extension ContextExtension on BuildContext {
 
   Color get primaryColor => colorScheme.primary;
   Color get secondaryColor => colorScheme.secondary;
-  Color get backgroundColor => colorScheme.background;
+  Color get backgroundColor => colorScheme.surface;
   Color get surfaceColor => colorScheme.surface;
   Color get errorColor => colorScheme.error;
   Color get onPrimaryColor => colorScheme.onPrimary;
   Color get onSecondaryColor => colorScheme.onSecondary;
-  Color get onBackgroundColor => colorScheme.onBackground;
+  Color get onBackgroundColor => colorScheme.onSurface;
   Color get onSurfaceColor => colorScheme.onSurface;
   Color get onErrorColor => colorScheme.onError;
 
@@ -168,7 +168,7 @@ extension ContextExtension on BuildContext {
   // ========== Localization ==========
 
   /// Get current locale
-  Locale get locale => Localizations.of(this);
+  Locale get locale => Localizations.localeOf(this);
 
   /// Check if current language is Arabic
   bool get isArabic => locale.languageCode == 'ar';

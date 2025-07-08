@@ -26,10 +26,27 @@ class AppConstants {
   static const int maxAdvanceBookingDays = 365;
   static const int minAdvanceBookingHours = 24;
   static const int paymentTimeoutMinutes = 15;
+  static const int paymentTimeoutHours = 24;
+  static const int commissionPaymentDueDays = 30;
 
   // Cancellation Policy
   static const int defaultCancellationHours = 48;
   static const double defaultRefundPercentage = 80.0;
+  static const int minCancellationHours = 24;
+  static const int minModificationHours = 48;
+
+  // Review Settings
+  static const int reviewEditTimeLimit = 24; // hours
+  static const int reviewAutoModerationThreshold = 3; // reports
+  static const int minHelpfulVotes = 2;
+  static const List<String> inappropriateWords = [
+    'spam', 'offensive', 'inappropriate', 'fake', 'scam'
+  ];
+
+  // System Settings
+  static const String systemUserId = 'SYSTEM';
+  static const String systemUserName = 'System';
+  static const String systemUserEmail = 'system@hallbooking.om';
 
   // Validation Constants
   static const int minNameLength = 2;

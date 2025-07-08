@@ -1,7 +1,7 @@
 // core/services/storage_service.dart
 
 import 'dart:io';
-import 'dart:typed_data';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image/image.dart' as img;
@@ -41,6 +41,9 @@ class StorageService {
     required String userId,
     UploadProgressCallback? onProgress,
   }) async {
+    if (!imageFile.existsSync()) {
+      return UploadResult.failure('Image file does not exist');
+    }
     try {
       // Validate image file
       final validation = Validators.validateImageFile(imageFile);
@@ -90,6 +93,9 @@ class StorageService {
     required String hallId,
     UploadProgressCallback? onProgress,
   }) async {
+    if (hallId.isEmpty) {
+      return UploadResult.failure('Invalid hall ID');
+    }
     try {
       // Validate number of images
       if (imageFiles.isEmpty) {
@@ -174,6 +180,13 @@ class StorageService {
     required String documentType, // 'license', 'tax_certificate', 'bank_statement', etc.
     UploadProgressCallback? onProgress,
   }) async {
+    if (!documentFile.existsSync()) {
+      return UploadResult.failure('Document file does not exist');
+    }
+    
+    if (ownerId.isEmpty) {
+      return UploadResult.failure('Owner ID is required');
+    }
     try {
       // Validate document file
       final validation = Validators.validateDocumentFile(documentFile);
@@ -223,6 +236,9 @@ class StorageService {
     required String reviewId,
     UploadProgressCallback? onProgress,
   }) async {
+    if (reviewId.isEmpty) {
+      return UploadResult.failure('Review ID is required');
+    }
     try {
       if (imageFiles.isEmpty) {
         return UploadResult.success(message: 'No images to upload');
@@ -286,6 +302,9 @@ class StorageService {
 
   /// Get download URL with caching
   Future<String?> getDownloadUrl(String storagePath, {bool useCache = true}) async {
+    if (storagePath.isEmpty) {
+      return null;
+    }
     try {
       // Check cache first
       if (useCache && _urlCache.containsKey(storagePath)) {

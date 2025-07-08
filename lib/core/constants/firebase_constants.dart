@@ -59,6 +59,7 @@ class FirebaseConstants {
   static const String roleField = 'role';
   static const String permissionsField = 'permissions';
   static const String assignedByField = 'assignedBy';
+  static const String assignedAtField = 'assignedAt';
 
   // Hall Owner Fields
   static const String ownerIdField = 'ownerId';

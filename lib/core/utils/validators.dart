@@ -116,7 +116,7 @@ class Validators {
     }
 
     // Allow letters, spaces, Arabic characters, and common name characters
-    final nameRegex = RegExp(r'^[a-zA-Z\u0600-\u06FF\s\'\-\.]+$');
+    final nameRegex = RegExp(r"^[a-zA-Z\u0600-\u06FF\s\'\-\.]+$");
     if (!nameRegex.hasMatch(name)) {
     return '$fieldName can only contain letters, spaces, and common name characters';
     }
@@ -638,6 +638,85 @@ class Validators {
   }
 
   // ========== Utility Methods ==========
+
+  /// Validate string field (required)
+  static String validateString(String? value, String fieldName) {
+    if (value == null || value.trim().isEmpty) {
+      throw ArgumentError('$fieldName is required');
+    }
+    return value.trim();
+  }
+
+  /// Validate positive integer
+  static int validatePositiveInt(dynamic value, String fieldName) {
+    if (value == null) {
+      throw ArgumentError('$fieldName is required');
+    }
+    
+    int? intValue;
+    if (value is int) {
+      intValue = value;
+    } else if (value is String) {
+      intValue = int.tryParse(value.trim());
+    } else if (value is num) {
+      intValue = value.toInt();
+    }
+    
+    if (intValue == null) {
+      throw ArgumentError('$fieldName must be a valid number');
+    }
+    
+    if (intValue <= 0) {
+      throw ArgumentError('$fieldName must be a positive number');
+    }
+    
+    return intValue;
+  }
+
+  /// Validate positive double
+  static double validatePositiveDouble(dynamic value, String fieldName) {
+    if (value == null) {
+      throw ArgumentError('$fieldName is required');
+    }
+    
+    double? doubleValue;
+    if (value is double) {
+      doubleValue = value;
+    } else if (value is int) {
+      doubleValue = value.toDouble();
+    } else if (value is String) {
+      doubleValue = double.tryParse(value.trim());
+    } else if (value is num) {
+      doubleValue = value.toDouble();
+    }
+    
+    if (doubleValue == null) {
+      throw ArgumentError('$fieldName must be a valid number');
+    }
+    
+    if (doubleValue <= 0) {
+      throw ArgumentError('$fieldName must be a positive number');
+    }
+    
+    return doubleValue;
+  }
+
+  /// Validate time format (HH:mm)
+  static String? validateTimeFormat(String? time, String fieldName) {
+    if (time == null || time.trim().isEmpty) {
+      return '$fieldName is required';
+    }
+
+    time = time.trim();
+
+    // Check format HH:mm
+    final timeRegex = RegExp(r'^([01]?[0-9]|2[0-3]):[0-5][0-9]$');
+    if (!timeRegex.hasMatch(time)) {
+      return '$fieldName must be in format HH:mm (e.g., 14:30)';
+    }
+
+    return null; // Valid
+  }
 
   /// Combine multiple validation results
   static String? combineValidations(List<String? Function()> validators) {

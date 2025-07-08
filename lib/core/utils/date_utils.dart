@@ -2,6 +2,7 @@
 
 import 'package:intl/intl.dart';
 import '../constants/app_constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// Comprehensive date and time utilities for the booking system
 class DateUtils {
@@ -486,6 +487,28 @@ class DateUtils {
   }
 
   // ========== Utility Methods ==========
+
+  /// Parse Firestore timestamp to DateTime
+  static DateTime? parseTimestamp(dynamic timestamp) {
+    if (timestamp == null) {
+      return null;
+    }
+    
+    try {
+      if (timestamp is Timestamp) {
+        return timestamp.toDate();
+      } else if (timestamp is DateTime) {
+        return timestamp;
+      } else if (timestamp is String) {
+        return DateTime.parse(timestamp);
+      } else if (timestamp is int) {
+        return DateTime.fromMillisecondsSinceEpoch(timestamp);
+      }
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
 
   /// Parse ISO 8601 date string
   static DateTime? parseISODate(String? dateString) {
